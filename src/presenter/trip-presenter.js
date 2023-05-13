@@ -20,6 +20,7 @@ export default class EventsPresenter {
 
     render(this.eventListContainer, this.eventsContainer);
     this.createEventItem(EditPointView, this.eventListContainer, null, this.destinations, this.offers);
+    this.createEventItem(EditPointView, this.eventListContainer, this.eventPoints[0], this.destinations, this.offers);
 
     for (let i = 0; i < this.eventPoints.length; i++) {
 
@@ -29,7 +30,6 @@ export default class EventsPresenter {
       const selectedOffers = getSelectedOffers(this.offers, this.eventPoints[i].offers);
 
       this.createEventItem(PointView, this.eventListContainer, this.eventPoints[i], selectedDestination, selectedOffers);
-      this.createEventItem(EditPointView, this.eventListContainer, this.eventPoints[i], this.destinations, this.offers);
     }
   };
 }
