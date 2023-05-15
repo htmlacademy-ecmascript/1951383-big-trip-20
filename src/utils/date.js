@@ -1,20 +1,9 @@
 import dayjs from 'dayjs';
-// @ts-ignore
 import { require } from 'dayjs';
 
 const HOUR = 1;
 const DAY = 24;
 
-function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
-const getRandomInteger = (a, b) => {
-  const min = Math.ceil(Math.min(a, b));
-  const max = Math.floor(Math.max(a, b));
-
-  return Math.floor(min + Math.random() * (max - min + 1));
-};
 
 const getTodayDate = () => dayjs().toISOString();
 
@@ -45,20 +34,18 @@ const durationDate = (startDate, endDate) => {
   return dayjs.duration(durationTime).format(durationFormat);
 };
 
-const getOffersByType = (offers, type) => offers.find((offer) => offer.type === type).offers;
+const isStartDateExpired = (dateFrom) => dayjs(dateFrom).isAfter(dayjs());
 
-const getSelectedDestination = (destinations, destinationId) => destinations.find((item) => item.id === destinationId);
+const isEndDateExpired = (dateTo) => dayjs(dateTo).isAfter(dayjs());
 
-const getSelectedOffers = (offers, offersIds) => offers.filter((item) => offersIds.some((offerId) => offerId === item.id));
+const isFutureEvent = (dateFrom, dateTo) => isStartDateExpired(dateFrom) && isEndDateExpired(dateTo);
 
-const isOfferIsSelected = (offerId, selectedOffersIds) => selectedOffersIds.includes(offerId);
+const isPresentEvent = (dateFrom, dateTo) => !isStartDateExpired(dateFrom) && isEndDateExpired(dateTo);
+
+const isPastEvent = (dateFrom, dateTo) => !isStartDateExpired(dateFrom) && !isEndDateExpired(dateTo);
 
 
 export {
-  getRandomArrayElement, getRandomInteger,
-  getTodayDate, humanizeDate,
-  formatTime, formatFormDate,
-  formatDate, durationDate,
-  getOffersByType, getSelectedDestination,
-  getSelectedOffers, isOfferIsSelected
+  getTodayDate, humanizeDate, formatDate, formatTime, isPastEvent,
+  formatFormDate, durationDate, isFutureEvent, isPresentEvent
 };

@@ -1,15 +1,18 @@
-import { createElement } from '../render.js';
-import { getSelectedDestination, getTodayDate } from '../utils.js';
-import { DEFAULT_TRIP_TYPE } from '../const.js';
+import AbstractView from '../framework/view/abstract-view.js';
+import { getSelectedDestination } from '../utils/point.js';
 import { createDestinationTemplate } from './template/destination-template.js';
 import { createFormOffersTemplate } from './template/form-offers-template.js';
 import { createDestinationInfoTemplate } from './template/destination-info-template.js';
 import { createPriceTemplate } from './template/price-template.js';
 import { createDatesTemplate } from './template/dates-template.js';
 import { createTypesTemplate } from './template/types-template.js';
+import { createCloseButtonTemplate } from './template/close-btn-template.js';
+import { BLANK_POINT, PointState } from '../const.js';
 
-const createPointFormTemplate = (point, destinations, offers) => {
+const createEditPointTemplate = (action, point, destinations, offers) => {
   const { basePrice, dateFrom, dateTo, type, destination, offers: selectedOffersId } = point;
+
+  const isEditPoint = action === PointState.EDIT;
 
   const initialPrice = basePrice !== null ? basePrice : '';
 
@@ -35,7 +38,8 @@ const createPointFormTemplate = (point, destinations, offers) => {
         ${createDatesTemplate(dateFrom, dateTo)}
         ${createPriceTemplate(initialPrice)}
         <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-        <button class="event__reset-btn" type="reset">Cancel</button>
+        <button class="event__reset-btn" type="reset">${isEditPoint ? 'Delete' : 'Cancel'}</button>
+        ${isEditPoint ? createCloseButtonTemplate() : ''}
     </header>
     ${isOffersAndDestinationInfo ? `<section class="event__details">
         ${isOffers ? createFormOffersTemplate(offers, selectedOffersId) : ''}
@@ -45,36 +49,42 @@ const createPointFormTemplate = (point, destinations, offers) => {
   </li>`;
 };
 
-export default class PointFormView {
-  constructor(point, destinations, offers) {
-    this.destinations = destinations;
-    this.offers = offers;
-    this.point =
-      point !== null
-        ? point
-        : {
-          basePrice: null,
-          dateFrom: getTodayDate(),
-          dateTo: getTodayDate(),
-          destination: null,
-          offers: [],
-          type: DEFAULT_TRIP_TYPE,
-        };
+export default class EditPointView extends AbstractView {
+  #action = null;
+  #point = null;
+  #destinations = [];
+  #offers = [];
+
+  constructor(action, point = BLANK_POINT, destinations, offers) {
+    super();
+    this.#action = action;
+    this.#destinations = destinations;
+    this.#offers = offers;
+    this.#point = point;
+    this._callback = undefined;
   }
 
-  getTemplate() {
-    return createPointFormTemplate(this.point, this.destinations, this.offers);
+  get template() {
+    return createEditPointTemplate(this.#action, this.#point, this.#destinations, this.#offers);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
+  setFormSubmitHandler = (callback) => {
+    this._callback.formSubmit = callback;
+    this.element.addEventListener('submit', this.#formSubmitHandler);
+  };
 
-    return this.element;
-  }
+  setCloseBtnClickHandler = (callback) => {
+    this._callback.closeClick = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#closeBtnClickHandler);
+  };
 
-  removeElement() {
-    this.element = null;
-  }
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.formSubmit();
+  };
+
+  #closeBtnClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.closeClick();
+  };
 }
