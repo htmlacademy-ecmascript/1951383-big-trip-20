@@ -39,6 +39,7 @@ export default class UiBlocker {
   /** Метод для блокировки интерфейса */
   block() {
     this.#startTime = Date.now();
+    // @ts-ignore
     this.#timerId = setTimeout(() => {
       this.#addClass();
     }, this.#lowerLimit);
