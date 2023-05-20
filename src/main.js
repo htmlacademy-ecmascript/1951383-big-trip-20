@@ -30,3 +30,5 @@ render(new SortView(sortedPoints), tripEventsElement);
 render(new NewEventButtonView(), newEventsButtonContainerElement);
 
 tripPresenter.init();
+
+//Задание module4-task2 выполнено в предыдущей ветке
