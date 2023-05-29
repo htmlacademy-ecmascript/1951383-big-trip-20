@@ -10,7 +10,7 @@ import FilterView from '../view/trip-filter.js';
 import { sortedPoints } from '../utils/sort.js';
 import { generateSortOptions } from '../mock/sort.js';
 import { filterPointsByType } from '../utils/filter.js';
-
+// Задание module5-task2 выполнено в предыдущей ветке
 export default class EventsPresenter {
 
   #eventListContainer = new TripListView();
@@ -84,7 +84,7 @@ export default class EventsPresenter {
     this.#filteredPoints = filterPointsByType(this.#eventPoints, filterType);
     this.#currentFilterType = filterType;
     this.#clearPointList();
-    this.#renderEvens();
+    this.#renderEvents();
   };
 
   #handleSortTypeChange = (sortType) => {
@@ -93,7 +93,7 @@ export default class EventsPresenter {
     }
     this.#sortPoints(sortType);
     this.#clearPointList();
-    this.#renderEvens();
+    this.#renderEvents();
   };
 
   #handleModeChange = () => {
@@ -137,7 +137,7 @@ export default class EventsPresenter {
     this.#currentSortType = sortType;
   }
 
-  #renderEvens() {
+  #renderEvents() {
     if (!this.#filteredPoints.length) {
       render(new EmptyListView(), this.#eventsContainer);
       return null;
@@ -169,7 +169,7 @@ export default class EventsPresenter {
 
     this.#renderFilter();
     this.#renderSort();
-    this.#renderEvens();
+    this.#renderEvents();
 
   };
 }
