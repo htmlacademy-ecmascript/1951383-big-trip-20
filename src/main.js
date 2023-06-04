@@ -24,4 +24,4 @@ const tripPresenter = new TripPresenter(
 render(new NewEventButtonView(), newEventsButtonContainerElement);
 
 tripPresenter.init();
-
+//6.9. Обновление века (часть 2) выполнено в ветке 6.1
