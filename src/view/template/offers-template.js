@@ -10,6 +10,5 @@ export const createOffersTemplate = (offers) => {
         +€&nbsp;
         <span class="event__offer-price">${offer.price}</span>
       </li>`
-    )
-    .join('');
+    ).join('');
 };
