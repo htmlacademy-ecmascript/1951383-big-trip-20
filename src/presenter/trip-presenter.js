@@ -31,20 +31,20 @@ export default class EventsPresenter {
 
   constructor({ tripEventsElement, filterModel,
     pointsModel, destinationModel, offersModel, onNewPointDestroy }) {
-      this.#pointsModel = pointsModel;
-      this.#destinationsModel = destinationModel;
-      this.#filterModel = filterModel;
-      this.#offersModel = offersModel;
-      this.#eventsContainer = tripEventsElement;
+    this.#pointsModel = pointsModel;
+    this.#destinationsModel = destinationModel;
+    this.#filterModel = filterModel;
+    this.#offersModel = offersModel;
+    this.#eventsContainer = tripEventsElement;
 
-      this.#newPointPresenter = new NewPointPresenter({
-        pointListContainer: this.#eventListContainer.element,
-        onDataChange: this.#handleViewAction,
-        onDestroy: onNewPointDestroy
-      });
+    this.#newPointPresenter = new NewPointPresenter({
+      pointListContainer: this.#eventListContainer.element,
+      onDataChange: this.#handleViewAction,
+      onDestroy: onNewPointDestroy
+    });
 
-      this.#pointsModel.addObserver(this.#handleModelEvent);
-      this.#filterModel.addObserver(this.#handleModelEvent);
+    this.#pointsModel.addObserver(this.#handleModelEvent);
+    this.#filterModel.addObserver(this.#handleModelEvent);
 
   }
 
@@ -56,7 +56,6 @@ export default class EventsPresenter {
       onDataChange: this.#handleViewAction,
       onModeChange: this.#handleModeChange
     });
-
     pointPresenter.init(point, allDestinations, allOffers);
     this.#pointPresenterMap.set(point.id, pointPresenter);
   };
@@ -142,6 +141,7 @@ export default class EventsPresenter {
         break;
       case UpdateType.MAJOR:
         // - обновить всю доску (например, при переключении фильтра)
+        // @ts-ignore
         this.#clearBoard({ resetRenderedPointCount: true, resetSortType: true });
         this.#renderBoard();
         break;
@@ -168,7 +168,7 @@ export default class EventsPresenter {
     }
     for (let i = 0; i < points.length; i++) {
 
-      this.#renderPoint(points[i], this.#destinations, this.#offers,);
+      this.#renderPoint(points[i], this.#destinations, this.#offers);
     }
   }
 
@@ -193,7 +193,6 @@ export default class EventsPresenter {
   }
 
   init = () => {
-
     // @ts-ignore
     this.#destinations = [...this.#destinationsModel.destinations];
     // @ts-ignore
