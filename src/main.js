@@ -21,9 +21,9 @@ const newPointButtonComponent = new NewEventButtonView({
 });
 
 const handleNewPointFormClose = () => {
+  // @ts-ignore
   newPointButtonComponent.element.disabled = false;
 };
-
 const tripPresenter = new TripPresenter(
   {
     tripEventsElement, filterModel,
@@ -39,6 +39,7 @@ const filterPresenter = new FilterPresenter({
 
 function handleNewPointButtonClick() {
   tripPresenter.createPoint();
+  // @ts-ignore
   newPointButtonComponent.element.disabled = true;
 }
 
@@ -46,3 +47,4 @@ function handleNewPointButtonClick() {
 render(newPointButtonComponent, newEventsButtonContainerElement);
 
 filterPresenter.init();
+tripPresenter.init();

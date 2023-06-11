@@ -6,7 +6,6 @@ import { createOffersTemplate } from './template/offers-template.js';
 
 function createPointTemplate(point, destinations, offers) {
   const { basePrice, dateFrom, dateTo, type, isFavorite } = point;
-
   const offersType = getOffersByType(offers, point.type);
   const destination = getSelectedDestination(
     destinations, point.destination);
