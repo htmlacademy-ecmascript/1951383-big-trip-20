@@ -11,7 +11,7 @@
     "not < 0.25%"
   ],
   "scripts": {
-    "lint": "tsc $$ eslint src/",
+    "lint": "eslint src/",
     "build": "webpack --mode production",
     "start": "webpack serve --mode development --open"
   },
@@ -35,7 +35,6 @@
   "dependencies": {
     "dayjs": "1.11.7",
     "flatpickr": "4.6.13",
-    "he": "1.2.0",
-    "nanoid": "4.0.0"
+    "he": "1.2.0"
   }
 }
