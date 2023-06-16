@@ -1,5 +1,5 @@
 import { render, replace, remove } from '../framework/render.js';
-import FilterView from '../view/trip-filter.js';
+import FilterView from '../view/filter-view.js';
 import { filter } from '../utils/filter.js';
 import { FilterType, UpdateType } from '../const.js';
 
@@ -45,7 +45,7 @@ export default class FilterPresenter {
     ];
   }
 
-  init() {
+  init = () => {
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
 
@@ -62,7 +62,7 @@ export default class FilterPresenter {
 
     replace(this.#filterComponent, prevFilterComponent);
     remove(prevFilterComponent);
-  }
+  };
 
   #handleModelEvent = () => {
     this.init();
