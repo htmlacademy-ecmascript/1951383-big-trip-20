@@ -1,6 +1,7 @@
 import { SortType } from '../const.js';
 import dayjs from 'dayjs';
 
+
 const options = {
   [SortType.DAY]: () => false,
   [SortType.EVENT]: () => true,
@@ -13,9 +14,10 @@ const options = {
 const sortedPoints = (points, sortType) => {
   switch (sortType) {
     case SortType.DAY:
-      return points.sort((pointA, pointB) => dayjs(pointB.dateFrom).diff(dayjs(pointA.dateFrom)));
+      return points.sort((pointA, pointB) => dayjs(pointA.dateFrom).diff(dayjs(pointB.dateFrom)));
     case SortType.TIME:
-      return points.sort((pointA, pointB) => dayjs(pointB.dateTo).diff(pointB.dateFrom) - dayjs(pointA.dateTo).diff(pointA.dateFrom));
+      return points.sort((pointA, pointB) =>
+        dayjs(pointB.dateTo).diff(pointB.dateFrom) - dayjs(pointA.dateTo).diff(pointA.dateFrom));
     case SortType.OFFERS:
       return points.sort((pointA, pointB) => pointB.offers.length - pointA.offers.length);
     case SortType.PRICE:
@@ -25,5 +27,11 @@ const sortedPoints = (points, sortType) => {
   }
 };
 
+const generateSortOptions = () =>
+  Object.entries(options).map(([optionName, isDisabledOption]) => ({
+    name: optionName,
+    // @ts-ignore
+    disabled: isDisabledOption(optionName),
+  }));
 
-export { sortedPoints, options };
+export { sortedPoints, options, generateSortOptions };

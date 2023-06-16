@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
 * Студент: [Александра Колесник](https://up.htmlacademy.ru/ecmascript/20/user/1951383).
-* Наставник: [Александр Конотоп](https://htmlacademy.ru/profile/sineway)
+* Наставник: [Олег Глущенко](https://htmlacademy.ru/profile/id305355)
 
 ---
 

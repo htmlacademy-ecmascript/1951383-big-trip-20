@@ -1,6 +1,6 @@
 import { render, replace, remove } from '../framework/render.js';
-import PointEditView from '../view/trip-point-edit.js';
-import PointView from '../view/trip-point.js';
+import PointEditView from '../view/point-edit-view.js';
+import PointView from '../view/point-view.js';
 import { isEscKey } from '../utils/point.js';
 import { Mode } from '../const.js';
 import { UserAction, UpdateType } from '../const.js';
@@ -24,7 +24,7 @@ export default class PointPresenter {
     this.#handleModeChange = onModeChange;
   }
 
-  init(point, allDestinations, allOffers) {
+  init = (point, allDestinations, allOffers) => {
     this.#point = point;
     this.#allDestinations = allDestinations;
     this.#allOffers = allOffers;
@@ -45,7 +45,7 @@ export default class PointPresenter {
       point: this.#point,
       allDestinations: this.#allDestinations,
       allOffers: this.#allOffers,
-      onFormClick: this.#handleFormCloseClick,
+      onEditPoint: this.#handleFormCloseClick,
       onDeleteClick: this.#handleDeleteClick
     });
 
@@ -67,14 +67,14 @@ export default class PointPresenter {
 
     remove(prevPointComponent);
     remove(prevPointEditComponent);
-  }
+  };
 
-  resetView() {
+  resetView = () => {
     if (this.#mode !== Mode.DEFAULT) {
       this.#pointEditComponent.reset(this.#point);
       this.#replaceFormToCard();
     }
-  }
+  };
 
   destroy() {
     remove(this.#pointComponent);
@@ -99,7 +99,7 @@ export default class PointPresenter {
     }
   };
 
-  setAborting() {
+  setAborting = () => {
     if (this.#mode === Mode.DEFAULT) {
       this.#pointComponent.shake();
       return;
@@ -114,20 +114,20 @@ export default class PointPresenter {
     };
 
     this.#pointEditComponent.shake(resetFormState);
-  }
+  };
 
-  #replaceFormToCard() {
+  #replaceFormToCard = () => {
     replace(this.#pointComponent, this.#pointEditComponent);
     document.removeEventListener('keydown', this.#escKeyDownHandler);
     this.#mode = Mode.DEFAULT;
-  }
+  };
 
-  #replaceCardToForm() {
+  #replaceCardToForm = () => {
     replace(this.#pointEditComponent, this.#pointComponent);
     document.addEventListener('keydown', this.#escKeyDownHandler);
     this.#handleModeChange();
     this.#mode = Mode.EDITING;
-  }
+  };
 
 
   #escKeyDownHandler = (evt) => {
