@@ -1,4 +1,4 @@
-import { isOfferIsSelected } from '../../utils/point.js';
+import {isOfferIsSelected} from '../../utils/point.js';
 
 const renderOffers = (offers, selectedOffersId, isDisabled) =>
   offers
@@ -8,7 +8,7 @@ const renderOffers = (offers, selectedOffersId, isDisabled) =>
       return `<div class="event__offer-selector">
         <input class="event__offer-checkbox  visually-hidden" id="event-offer-${offer.id}"
         type="checkbox" name=${offerName} ${isOfferIsSelected(offer.id, selectedOffersId) ? 'checked' : ''}
-        data-offer-id="${offer.id}"
+        data-offer-id="${offer.id}" data-offer-price="${offer.price}"
         ${isDisabled ? 'disabled' : ''}>
         <label class="event__offer-label" for="event-offer-${offer.id}">
             <span class="event__offer-title">${offer.title}</span>
