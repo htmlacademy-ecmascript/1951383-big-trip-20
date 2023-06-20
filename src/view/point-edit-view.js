@@ -193,7 +193,6 @@ export default class PointEditView extends AbstractStatefulView {
 
   #destinationChangeHandler = (evt) => {
     evt.preventDefault();
-    const priceInput = this.element.querySelector('.event__input--price');
     const pickedDestination = this.#destinations.find((destination) =>
       evt.target.value === destination.name);
 
@@ -204,30 +203,21 @@ export default class PointEditView extends AbstractStatefulView {
 
     this.updateElement({
       destination: pickedDestination.id,
-      basePrice: priceInput.value
     });
   };
 
   #offerChangeHandler = (evt) => {
     evt.preventDefault();
-    const priceInput = this.element.querySelector('.event__input--price');
 
     if (evt.target.tagName === 'INPUT') {
       const currentOfferId = evt.target.dataset.offerId;
-      const currentOfferPrice = Number(evt.target.dataset.offerPrice);
       const currentOfferIndex = this._state.offers.indexOf(currentOfferId);
 
       if (currentOfferIndex === -1) {
         this._state.offers.push(currentOfferId);
-        this.updateElement({
-          basePrice: priceValidation(String(Number(priceInput.value) + currentOfferPrice)),
-        });
         return;
       }
       this._state.offers.splice(currentOfferIndex, 1);
-      this.updateElement({
-        basePrice: priceValidation(String(Number(priceInput.value) - currentOfferPrice)),
-      });
     }
   };
 

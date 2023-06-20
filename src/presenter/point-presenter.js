@@ -40,13 +40,13 @@ export default class PointPresenter {
       onFavoriteClick: this.#handleFavoriteClick
     });
 
-    // @ts-ignore
     this.#pointEditComponent = new PointEditView({
       point: this.#point,
       allDestinations: this.#allDestinations,
       allOffers: this.#allOffers,
       onEditPoint: this.#handleFormCloseClick,
-      onDeleteClick: this.#handleDeleteClick
+      onDeleteClick: this.#handleDeleteClick,
+      onFormSubmit: this.#handleFormSubmit
     });
 
     // проверка = был ли перезаписан объект.
